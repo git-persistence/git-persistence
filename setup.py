@@ -4,10 +4,7 @@ setup(
     name='git_persistence',
     version='1.0',
     packages=['git_persistence'],
-    install_requires=[
-    'hashlib', 
-    'multiprocessing', 
-    'psutil'],
+    install_requires=['hashlib', 'multiprocessing', 'psutil'],
     url='https://github.com/git-persistence',
     license='MIT',
     author='Michail Tsikerdekis',

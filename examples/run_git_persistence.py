@@ -5,8 +5,7 @@ from subprocess import call
 import os
 import csv
 import re
-import time
-from git_persistence import *
+from git_persistence import GitPersistence
 import parallel_lib
 import sys
 

@@ -1,4 +1,4 @@
-# Auxiliary file containing functions for parallelazation
+# Auxiliary file containing functions for parallelization
 
 import multiprocessing
 import time
