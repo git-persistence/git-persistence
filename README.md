@@ -20,7 +20,7 @@ is being conducted by [Wyatt Chapman](https://www.linkedin.com/in/wyatt-chapman)
 will become deprecated and will be retained in a sub-folder for reference.
 
 # Licence
-For licence information in regards to the Python implementation see LICENCE.md
+For licence information in regards to the Python implementation see LICENCE.txt
 
 # Documentation
 
