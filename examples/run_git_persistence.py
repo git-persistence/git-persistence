@@ -8,6 +8,7 @@ import re
 from git_persistence import GitPersistence
 import parallel_lib
 import sys
+import hashlib
 
 # Getting the git repo dir from argv
 GIT_PATH = sys.argv[1]

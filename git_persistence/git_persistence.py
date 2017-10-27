@@ -1,4 +1,5 @@
 import difflib
+from difflib import Match
 import hashlib
 import random
 import math
@@ -137,8 +138,13 @@ class GitPersistence:
             diffs.append([])
             if cnt[original[x]] > 0:  # it exists (this is O(1) which helps skip a lot of comparisons)
                 y = y_list.index(new_tmp.index(original[x]))  # reference index number in y_list (iterable)
-                line_diff_result = difflib.SequenceMatcher(None, original[x], new[y_list[y]], autojunk=False)
-                diffs[x].append([x, y_list[y], line_diff_result.ratio(), line_diff_result.get_matching_blocks()])
+                # Adding a matched record that simulates what difflib would find if it were to compare the two strings
+                # Basically the whole new line matches the old, difflib always has a zero size match as the last
+                # element.
+                diffs[x].append([x, y_list[y], 1.0,
+                                 [Match(a=0, b=0, size=len(original[x])),
+                                  Match(a=len(original[x]), b=len(original[x]), size=0)]
+                                 ])
                 del (y_list[y])  # delete the existing object's line
                 # This is like deleting the record for the purposes of retrieving the index from the tmp object.
                 # Deleting would have shifted the numbers
