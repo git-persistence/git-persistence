@@ -8,9 +8,9 @@ other tools.
 For further technical description on how it works refer to the following article (information to be updated soon):
 
 Tsikerdekis, M. (in-press). Persistent Code Contribution: A Ranking Algorithm for Code Contribution in Crowdsourced
-Software. Empirical Software Engineering, (xx) xx, doi: xx.
+Software. Empirical Software Engineering, (xx) xx, doi: 10.1007/s10664-017-9575-4.
 
-Link: [article link](http://michael.tsikerdekis.com)
+Link: [article link](http://rdcu.be/y0I9) [link2](https://link.springer.com/article/10.1007%2Fs10664-017-9575-4)
 
 # Development and Future Updates
 
