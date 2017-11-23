@@ -43,7 +43,7 @@ python setup.py install
 from git_persistence import GitPersistence
 file1 = GitPersistence("This is a test!", "user1")
 file1.update("I just changed your test!", "user2")
-file1.update("I changed ur test! Thank you for helping out!", "user3")
+file1.update("I changed you test!\nThank you for helping out!", "user3")
 file1.calculate_ownership()
 ```
 
