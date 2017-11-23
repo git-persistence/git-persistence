@@ -50,8 +50,10 @@ file1.calculate_ownership()
 ## Examples directory
 
 ```
+pip3 install psutil # optional, but important if you don't install git-persistence globaly with setup.py
+cd examples
 git clone https://github.com/github/scientist.git
-python3 run_git_persistence.py scientist
+env PYTHONPATH=.. python3 run_git_persistence.py scientist
 ```
 
 run_git_persistence.py outputs several files depending on how the run_git_persistence.py script is modified.
