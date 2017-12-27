@@ -3,3 +3,11 @@ build
 *info/
 *.pyc
 .idea
+examples/scientist
+examples/commits.tsv
+examples/files.tmp
+examples/output-parallel.log
+examples/pa_per_rev.tsv
+examples/persistence_scores.tsv
+examples/times.tsv
+examples/git_fame_per_rev.tsv

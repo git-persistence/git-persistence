@@ -9,6 +9,7 @@ from git_persistence import GitPersistence
 import parallel_lib
 import sys
 import hashlib
+import datetime
 
 # Getting the git repo dir from argv
 GIT_PATH = sys.argv[1]
@@ -89,6 +90,8 @@ def reset_files():
         os.remove("times.tsv")
     if os.path.isfile("pa_per_rev.tsv"):
         os.remove("pa_per_rev.tsv")
+    if os.path.isfile("git_fame_per_rev.tsv"):
+        os.remove("git_fame_per_rev.tsv")
 
 
 def pre_process():
@@ -165,6 +168,25 @@ def process_git_file(filename, store_each_revision=True):
                              str(results[0].get(result, 0)),
                              str(results[1].get(result, 0))))
                 f.close()
+                
+                # Get additional git-fame (blame) stats per revision (there is a limitation on the basis of date)
+                # git-fame uses always the latest commit for that date
+                # The solution below produces duplicates that need to be removed during the analysis (fairly easy)
+                git_fame_file_name = "gitfame"+hash_name
+                execute_and_save(["git", "fame", "--format=csv", "-h", "--before",
+                                  datetime.datetime.fromtimestamp(int(commit[3])).strftime('%Y-%m-%d')],
+                                 git_fame_file_name, GIT_PATH)
+                f = open("git_fame_per_rev.tsv", "a")
+                with open(git_fame_file_name, 'r', encoding="utf-8") as git_fame_file:
+                    git_fame_lines = git_fame_file.readlines()
+                os.remove(git_fame_file_name)
+                a = 0
+                for line in git_fame_lines:
+                    if a != 0:  # skip first line
+                        f.write("%s,%s\n" % (line.strip(), commit[0]))
+                    a += 1
+                f.close()
+
             i += 1
             os.remove(hash_name)
         os.remove("commits" + hash_name + ".tmp")
@@ -203,4 +225,4 @@ def process_git_file(filename, store_each_revision=True):
 if __name__ == '__main__':
     files = pre_process()
     reset_files()
-    parallel_lib.parallel_process(32, files, process_git_file)
+    parallel_lib.parallel_process(8, files, process_git_file)
