@@ -30,12 +30,13 @@ def execute_and_return(command_list, git_path):
     :return: output and error (if any)
     :rtype: tuple
     """
+    current_dir = os.getcwd()
     os.chdir(git_path)
     process = subprocess.Popen(command_list,
                                stdout=subprocess.PIPE,
                                stderr=subprocess.PIPE)
     out, err = process.communicate()
-    os.chdir("../")
+    os.chdir(current_dir)
     return out, err
 
 
@@ -165,10 +166,13 @@ def process_git_file(filename, store_each_revision=True):
                              str(results[1].get(result, 0))))
                 f.close()
                 
-                # Get additional git-fame (blame) stats per revision (there is a limitation on the basis of date)
-                # git-fame uses always the latest commit for that date
-                # The solution below produces duplicates that need to be removed during the analysis (fairly easy)
-                if commit[0] not in git_fame_processed_commits:
+                # To avoid duplicates we will quick grep for the commit number the git fame per rev file
+                # This way if another parallel process already looked at that commit we can skip it
+                # There is still an odd chance that duplicates may be generated so one has to clean those when loading
+                # the csv
+                out, err = execute_and_return(["grep", commit[0], "git_fame_per_rev.tsv"],
+                                              os.getcwd())
+                if len(out.decode("utf-8").splitlines()) == 0:
                     out, err = execute_and_return(["git", "fame", "--format=csv", "--timeout=-1", "-h", "--before",
                                                    datetime.datetime.fromtimestamp(int(commit[3])).
                                                   strftime('%Y-%m-%d')],
