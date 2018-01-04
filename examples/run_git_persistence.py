@@ -169,7 +169,7 @@ def process_git_file(filename, store_each_revision=True):
                 # git-fame uses always the latest commit for that date
                 # The solution below produces duplicates that need to be removed during the analysis (fairly easy)
                 if commit[0] not in git_fame_processed_commits:
-                    out, err = execute_and_return(["git", "fame", "--format=csv", "-h", "--before",
+                    out, err = execute_and_return(["git", "fame", "--format=csv", "--timeout=-1", "-h", "--before",
                                                    datetime.datetime.fromtimestamp(int(commit[3])).
                                                   strftime('%Y-%m-%d')],
                                                   GIT_PATH)
