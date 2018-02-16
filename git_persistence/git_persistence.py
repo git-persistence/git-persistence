@@ -170,7 +170,7 @@ class GitPersistence:
 
         # Iterate through all the calculated diffs and figure out the best matches
         # The look keeps going on and on until all possible matches are found (could be rewritten as a recursive func)
-        # to_delete serves a deleting agent so that after a match is append the lines found to much as eliminated
+        # to_delete serves a deleting agent so that after a match is appended, the lines found to match are eliminated
         # from further consideration
         to_delete = -999  # init a non-sense number
         while found is True:
